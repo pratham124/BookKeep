@@ -12,7 +12,7 @@ interface LambdaStackProps extends StackProps {
 }
 
 export class LambdaStack extends Stack {
-  private readonly lambdaIntegration: LambdaIntegration;
+  private readonly BookLambdaIntegration: LambdaIntegration;
 
   constructor(scope: Construct, id: string, props: LambdaStackProps) {
     super(scope, id, props);
@@ -40,11 +40,11 @@ export class LambdaStack extends Stack {
       })
     );
 
-    this.lambdaIntegration = new LambdaIntegration(lambda);
+    this.BookLambdaIntegration = new LambdaIntegration(lambda);
   }
 
   public getLambdaIntegration(): LambdaIntegration {
-    return this.lambdaIntegration;
+    return this.BookLambdaIntegration;
   }
 }
 
