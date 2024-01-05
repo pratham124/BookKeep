@@ -8,10 +8,12 @@
 
 :root {
   --primary-color: #c4a484;
-  --secondary-color: #c1e1c1;
+  --secondary-color: #afe1af;
+  --tertiary-color: #e1ad01;
 
   --text-color: #808080;
   --nav-height: 6rem;
+  --light-gray: #cdcdcd;
 }
 
 html {
@@ -105,6 +107,10 @@ body {
   color: var(--secondary-color);
 }
 
+.btn-margin-top {
+  margin-top: 5rem;
+}
+
 .form-div {
   display: flex;
   justify-content: center;
@@ -119,19 +125,29 @@ body {
   justify-content: flex-start;
   background: var(--secondary-color);
   color: white;
-  padding: 30px;
+  padding: 5rem;
   width: 40rem;
   height: 50rem;
   box-shadow: 0px 5px 15px 2px var(--secondary-color);
-  gap: 10rem;
+  gap: 1rem;
+}
+
+.register-form {
+  width: 45rem;
+  height: 60rem;
+}
+
+.form h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 5rem;
 }
 
 .form-label {
   display: block;
-  font-size: var(--small-text);
+  font-size: 1.8rem;
   margin-bottom: 0.75rem;
   text-transform: capitalize;
-  letter-spacing: var(--letter-spacing);
   line-height: 1.5;
 }
 .form-input,
@@ -139,11 +155,19 @@ body {
 .form-select {
   width: 100%;
   padding: 0.375rem 0.75rem;
-  border-radius: var(--border-radius);
-  background: var(--text-color);
-  border: 1px solid var(--grey-300);
-  color: var(--text-color);
+  background: var(--secondary-color);
+  border: none;
+  border-bottom: 2px solid var(--primary-color);
+  color: whitesmoke;
 }
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-bottom: 2px solid var(--primary-color);
+}
+
 .form-input,
 .form-select,
 .form-btn {
@@ -158,10 +182,19 @@ body {
 }
 ::placeholder {
   font-family: inherit;
-  color: var(--grey-400);
+  color: var(--light-gray);
 }
 .form-alert {
   color: var(--red-dark);
   letter-spacing: var(--letter-spacing);
   text-transform: capitalize;
+}
+
+.link-text {
+  font-size: 1.6rem;
+}
+
+.link-btn {
+  text-decoration: none;
+  color: var(--primary-color);
 }
