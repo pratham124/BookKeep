@@ -7,6 +7,12 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import { action as loginAction } from "./pages/Login";
 import { action as registerAction } from "./pages/Register";
+import CurrentlyReading from "./pages/CurrentlyReading";
+import HaveRead from "./pages/HaveRead";
+import Profile from "./pages/Profile";
+import WillRead from "./pages/WillRead";
+import AddBook from "./pages/AddBook";
+import Book from "./pages/Book";
 
 const router = createBrowserRouter([
   {
@@ -29,9 +35,34 @@ const router = createBrowserRouter([
         action: registerAction,
       },
       {
-        path: "/dashboard",
+        path: "dashboard",
         element: <Dashboard />,
-        children: [],
+        children: [
+          {
+            index: true,
+            element: <CurrentlyReading />,
+          },
+          {
+            path: "have-read",
+            element: <HaveRead />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+          {
+            path: "will-read",
+            element: <WillRead />,
+          },
+          {
+            path: "add-book",
+            element: <AddBook />,
+          },
+          {
+            path: "book/:id",
+            element: <Book />,
+          },
+        ],
       },
     ],
   },
