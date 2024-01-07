@@ -5,10 +5,15 @@ import {
   UserPool,
 } from "aws-cdk-lib/aws-cognito";
 import { FederatedPrincipal, Role } from "aws-cdk-lib/aws-iam";
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
 
+interface AuthStackProps {
+  PreSignupLambda: NodejsFunction;
+}
+
 export class AuthStack extends Stack {
-  constructor(scope: Construct, id: string, props?: any) {
+  constructor(scope: Construct, id: string, props: AuthStackProps) {
     super(scope, id);
 
     const userPool = new UserPool(this, "BookKeepUserPool", {
@@ -17,6 +22,9 @@ export class AuthStack extends Stack {
       signInAliases: {
         email: true,
         username: true,
+      },
+      lambdaTriggers: {
+        preSignUp: props.PreSignupLambda,
       },
     });
 

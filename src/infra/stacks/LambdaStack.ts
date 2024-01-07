@@ -4,7 +4,11 @@ import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
 import { LambdaIntegration } from "aws-cdk-lib/aws-apigateway";
-import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
+import {
+  Effect,
+  FederatedPrincipal,
+  PolicyStatement,
+} from "aws-cdk-lib/aws-iam";
 import { join } from "path";
 
 interface LambdaStackProps extends StackProps {
@@ -13,11 +17,12 @@ interface LambdaStackProps extends StackProps {
 
 export class LambdaStack extends Stack {
   private readonly BookLambdaIntegration: LambdaIntegration;
+  private readonly PreSignupLambda: NodejsFunction;
 
   constructor(scope: Construct, id: string, props: LambdaStackProps) {
     super(scope, id, props);
 
-    const lambda = new NodejsFunction(this, "BookKeepLambda", {
+    const bookLambda = new NodejsFunction(this, "BookKeepLambda", {
       runtime: Runtime.NODEJS_18_X,
       entry: join(__dirname, "..", "..", "services", "books", "main.ts"),
       handler: "handler",
@@ -26,7 +31,7 @@ export class LambdaStack extends Stack {
       },
       timeout: Duration.minutes(1),
     });
-    lambda.addToRolePolicy(
+    bookLambda.addToRolePolicy(
       new PolicyStatement({
         effect: Effect.ALLOW,
         actions: [
@@ -40,10 +45,21 @@ export class LambdaStack extends Stack {
       })
     );
 
-    this.BookLambdaIntegration = new LambdaIntegration(lambda);
+    this.BookLambdaIntegration = new LambdaIntegration(bookLambda);
+
+    this.PreSignupLambda = new NodejsFunction(this, "PreSignupLambda", {
+      runtime: Runtime.NODEJS_18_X,
+      entry: join(__dirname, "..", "..", "services", "auth", "presignup.ts"),
+      handler: "handler",
+      timeout: Duration.minutes(1),
+    });
   }
 
   public getLambdaIntegration(): LambdaIntegration {
     return this.BookLambdaIntegration;
+  }
+
+  public getPreSignupLambda(): NodejsFunction {
+    return this.PreSignupLambda;
   }
 }

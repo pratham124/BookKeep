@@ -9,7 +9,9 @@ const dataStack = new DataStack(app, "DataStack");
 const lambdaStack = new LambdaStack(app, "LambdaStack", {
   bookTable: dataStack.getTable(),
 });
-const authStack = new AuthStack(app, "AuthStack");
+const authStack = new AuthStack(app, "AuthStack", {
+  PreSignupLambda: lambdaStack.getPreSignupLambda(),
+});
 const apiStack = new ApiStack(app, "ApiStack", {
   bookLambdaIntegration: lambdaStack.getLambdaIntegration(),
 });
