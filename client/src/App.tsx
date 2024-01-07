@@ -13,62 +13,63 @@ import Profile from "./pages/Profile";
 import WillRead from "./pages/WillRead";
 import AddBook from "./pages/AddBook";
 import Book from "./pages/Book";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-    errorElement: <Error />,
-    children: [
-      {
-        index: true,
-        element: <Landing />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-        action: loginAction,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-        action: registerAction,
-      },
-      {
-        path: "dashboard",
-        element: <Dashboard />,
-        children: [
-          {
-            index: true,
-            element: <CurrentlyReading />,
-          },
-          {
-            path: "have-read",
-            element: <HaveRead />,
-          },
-          {
-            path: "profile",
-            element: <Profile />,
-          },
-          {
-            path: "will-read",
-            element: <WillRead />,
-          },
-          {
-            path: "add-book",
-            element: <AddBook />,
-          },
-          {
-            path: "book/:id",
-            element: <Book />,
-          },
-        ],
-      },
-    ],
-  },
-]);
+import { useAuth } from "./store/authStore";
 
 function App() {
+  const authContext = useAuth();
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />,
+      errorElement: <Error />,
+      children: [
+        {
+          index: true,
+          element: <Landing />,
+        },
+        {
+          path: "/login",
+          element: <Login />,
+          action: loginAction(authContext),
+        },
+        {
+          path: "/register",
+          element: <Register />,
+          action: registerAction,
+        },
+        {
+          path: "dashboard",
+          element: <Dashboard />,
+          children: [
+            {
+              index: true,
+              element: <CurrentlyReading />,
+            },
+            {
+              path: "have-read",
+              element: <HaveRead />,
+            },
+            {
+              path: "profile",
+              element: <Profile />,
+            },
+            {
+              path: "will-read",
+              element: <WillRead />,
+            },
+            {
+              path: "add-book",
+              element: <AddBook />,
+            },
+            {
+              path: "book/:id",
+              element: <Book />,
+            },
+          ],
+        },
+      ],
+    },
+  ]);
   return <RouterProvider router={router}></RouterProvider>;
 }
 

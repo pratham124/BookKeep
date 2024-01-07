@@ -21,7 +21,9 @@ export class AuthService {
           authFlowType: "USER_PASSWORD_AUTH",
         },
       });
-      (await fetchAuthSession()).tokens ?? {};
+      const { idToken } = (await fetchAuthSession()).tokens ?? {};
+      const stringToken = idToken?.toString();
+      return { token: stringToken, userId: idToken?.payload?.sub };
     } catch (err) {
       console.error(err);
       throw err;

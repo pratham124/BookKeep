@@ -6,36 +6,44 @@ import { AuthService } from "../services/AuthService";
 import { useActionData } from "react-router-dom";
 import { errorMsg } from "./Register";
 
-export const action: ActionFunction = async ({ request }) => {
-  const data = Object.fromEntries(await request.formData());
-  const errors: errorMsg = {};
-  if (!data.username) {
-    errors.username = "Username is required";
-  }
-
-  if (!data.password) {
-    errors.password = "Password is required";
-  }
-
-  if (Object.keys(errors).length) {
-    return errors;
-  }
-
-  const { username, password } = data;
-
-  try {
-    const authService = new AuthService();
-    await authService.login(username.toString(), password.toString());
-    return redirect("/dashboard");
-  } catch (error) {
-    if (error instanceof Error) {
-      toast.error(error.message);
-    } else {
-      toast.error("Something went wrong");
+export const action: ActionFunction =
+  (authContext) =>
+  async ({ request }) => {
+    const { setAuthInfo } = authContext;
+    const data = Object.fromEntries(await request.formData());
+    const errors: errorMsg = {};
+    if (!data.username) {
+      errors.username = "Username is required";
     }
-    return error;
-  }
-};
+
+    if (!data.password) {
+      errors.password = "Password is required";
+    }
+
+    if (Object.keys(errors).length) {
+      return errors;
+    }
+
+    const { username, password } = data;
+
+    try {
+      const authService = new AuthService();
+      const res = await authService.login(
+        username.toString(),
+        password.toString()
+      );
+      const { token, userId } = res;
+      setAuthInfo({ id: userId, token });
+      return redirect("/dashboard");
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+      return error;
+    }
+  };
 
 const Login = () => {
   const errors: errorMsg = useActionData() as errorMsg;
