@@ -1,9 +1,11 @@
 import React from "react";
 import SearchBar from "./SearchBar";
+import BookContainer from "./BookContainer";
 
 type Book = {
   title: string;
   author: string;
+  photoUrl?: string;
 };
 
 const BooksContainer = ({ books }: { books: Book[] }) => {
@@ -12,13 +14,13 @@ const BooksContainer = ({ books }: { books: Book[] }) => {
       <SearchBar />
       <div className="books-container">
         {books.map((book, i) => (
-          <div className="book-container" key={i}>
-            <img src="https://via.placeholder.com/150" alt="book cover" />
-            <div className="book-info">
-              <div>{book.title}</div>
-              <div>By {book.author}</div>
-            </div>
-          </div>
+          <BookContainer
+            key={i}
+            id={i.toString()}
+            title={book.title}
+            author={book.author}
+            photoUrl={book?.photoUrl}
+          />
         ))}
       </div>
     </>

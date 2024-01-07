@@ -11,7 +11,8 @@
   --secondary-color: #afe1af;
   --tertiary-color: #e1ad01;
 
-  --text-color: #808080;
+  --text-primary: wheat;
+  --text-secondary: white;
   --nav-height: 6rem;
   --light-gray: #cdcdcd;
 }
@@ -66,14 +67,14 @@ body {
   justify-content: center;
   align-items: start;
   gap: 5rem;
-  color: white;
+  color: var(--text-secondary);
   font-size: 2.4rem;
 }
 
 .addbook-info {
   display: flex;
   flex-direction: column;
-  color: white;
+  color: var(--text-secondary);
   gap: 5rem;
   font-size: 1.6rem;
 }
@@ -83,21 +84,19 @@ body {
   font-weight: 700;
 }
 
-.file-container {
-  position: relative;
-}
-
 .drag-drop {
-  border: 4px dashed #fff;
+  position: relative;
+  border: 4px dashed var(--text-secondary);
+  overflow: hidden;
+  height: 35rem;
   width: 100%;
-  height: 100%;
-  padding: 15rem 7rem;
 }
 
 .drag-drop p {
+  margin-top: 2rem;
   font-size: 1.8rem;
   text-align: center;
-  color: #ffffff;
+  color: var(--text-secondary);
 }
 
 .drag-drop input {
@@ -112,13 +111,19 @@ body {
   opacity: 0;
 }
 
+.drag-drop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .profile-info {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 7rem;
-  color: white;
+  color: var(--text-secondary);
   font-size: 2.4rem;
 }
 
@@ -128,7 +133,7 @@ body {
   justify-content: start;
   align-items: center;
   gap: 2rem;
-  background: whitesmoke;
+  background: var(--text-secondary);
   border-radius: 1rem;
   width: 25rem;
   height: 35rem;
@@ -140,7 +145,7 @@ body {
 .book-info {
   display: flex;
   flex-direction: column;
-  color: var(--text-color);
+  color: var(--primary-color);
   gap: 1rem;
   font-size: 1.6rem;
 }
@@ -200,7 +205,7 @@ body {
   padding: 0.5rem 1rem;
   text-decoration: none;
   font-size: 2rem;
-  color: white;
+  color: var(--text-secondary);
 }
 
 .nav-link::before {
@@ -231,13 +236,13 @@ body {
 }
 
 .active {
-  color: var(--secondary-color);
+  color: var(--text-primary);
 }
 
 .landing-text {
   display: flex;
   flex-direction: column;
-  color: white;
+  color: var(--text-secondary);
   gap: 5rem;
   line-height: 1.5;
 }
@@ -268,7 +273,7 @@ body {
   align-items: center;
   cursor: pointer;
   font-size: large;
-  color: white;
+  color: var(--text-secondary);
   font-weight: bold;
   border-radius: 10px;
   transition: all 0.25s ease;
@@ -287,7 +292,7 @@ body {
 }
 
 .btn-secondary {
-  background: white;
+  background: var(--text-secondary);
   border: 1px solid var(--secondary-color);
   color: var(--secondary-color);
 }
@@ -309,7 +314,7 @@ body {
   align-items: center;
   justify-content: flex-start;
   background: var(--secondary-color);
-  color: white;
+  color: var(--text-secondary);
   padding: 5rem;
   width: 40rem;
   height: 50rem;
@@ -348,7 +353,7 @@ input:-webkit-autofill:focus {
   background: var(--secondary-color);
   border: none;
   border-bottom: 2px solid var(--primary-color);
-  color: whitesmoke;
+  color: var(--text-secondary);
 }
 
 .form-input:focus,
@@ -404,7 +409,7 @@ input:-webkit-autofill:focus {
 
 .search-input,
 .search-btn {
-  color: #fff;
+  color: var(--text-secondary);
   padding: 0;
   margin: 0;
   border: 0;
@@ -418,10 +423,6 @@ input:-webkit-autofill:focus {
 .search-input[type="text"] {
   font-size: 5rem;
   line-height: 1;
-}
-
-.search-input[type="text"]::placeholder {
-  color: wheat;
 }
 
 .search-btn {
@@ -504,4 +505,27 @@ input:-webkit-autofill:focus {
   right: -6px;
   width: 40px;
   background-color: #fff;
+}
+.search-input[type="text"]::placeholder {
+  color: var(--text-primary);
+}
+
+.add-book {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background: var(--secondary-color);
+  width: 70%;
+  border-radius: 5rem;
+  margin-top: 4rem;
+  padding: 7rem;
+  gap: 5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
