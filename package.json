@@ -21,8 +21,13 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@aws-amplify/auth": "^6.0.10",
+    "@aws-sdk/client-cognito-identity": "^3.485.0",
     "@aws-sdk/client-dynamodb": "^3.485.0",
+    "@aws-sdk/client-s3": "^3.485.0",
+    "@aws-sdk/credential-providers": "^3.485.0",
     "@aws-sdk/lib-dynamodb": "^3.485.0",
-    "@aws-sdk/util-dynamodb": "^3.485.0"
+    "@aws-sdk/util-dynamodb": "^3.485.0",
+    "aws-amplify": "^6.0.10"
   }
 }

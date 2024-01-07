@@ -47,6 +47,3 @@ export class LambdaStack extends Stack {
     return this.BookLambdaIntegration;
   }
 }
-
-const p = join(__dirname, "..", "..", "services", "books", "main.ts");
-console.log(p);
