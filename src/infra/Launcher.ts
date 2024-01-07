@@ -14,4 +14,5 @@ const authStack = new AuthStack(app, "AuthStack", {
 });
 const apiStack = new ApiStack(app, "ApiStack", {
   bookLambdaIntegration: lambdaStack.getLambdaIntegration(),
+  userPool: authStack.getUserPool(),
 });

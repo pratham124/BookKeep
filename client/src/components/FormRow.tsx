@@ -6,16 +6,21 @@ const FormRow = ({
   type,
   labelText,
   placeHolder,
+  isError,
 }: {
   defaultValue: string;
   name: string;
   type: string;
   labelText: string;
   placeHolder: string;
+  isError: boolean;
 }) => {
   return (
     <div className="form-row">
-      <label htmlFor={name} className="form-label">
+      <label
+        htmlFor={name}
+        className={isError ? "form-label red-label" : "form-label"}
+      >
         {labelText || name}
       </label>
       <input

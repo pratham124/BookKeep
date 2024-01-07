@@ -1,9 +1,19 @@
 import { Stack, StackProps } from "aws-cdk-lib";
-import { LambdaIntegration, RestApi } from "aws-cdk-lib/aws-apigateway";
+import {
+  AuthorizationType,
+  CognitoUserPoolsAuthorizer,
+  Cors,
+  LambdaIntegration,
+  MethodOptions,
+  ResourceOptions,
+  RestApi,
+} from "aws-cdk-lib/aws-apigateway";
+import { IUserPool } from "aws-cdk-lib/aws-cognito";
 import { Construct } from "constructs";
 
 interface ApiStackProps extends StackProps {
   bookLambdaIntegration: LambdaIntegration;
+  userPool: IUserPool;
 }
 
 export default class ApiStack extends Stack {
@@ -12,10 +22,31 @@ export default class ApiStack extends Stack {
 
     const api = new RestApi(this, "BookApi");
 
-    const books = api.root.addResource("books");
-    books.addMethod("GET", props.bookLambdaIntegration);
-    books.addMethod("POST", props.bookLambdaIntegration);
-    books.addMethod("PUT", props.bookLambdaIntegration);
-    books.addMethod("DELETE", props.bookLambdaIntegration);
+    const authorizer = new CognitoUserPoolsAuthorizer(this, "Authorizer", {
+      cognitoUserPools: [props.userPool],
+      identitySource: "method.request.header.Authorization",
+    });
+    authorizer._attachToApi(api);
+
+    const auth: MethodOptions = {
+      authorizationType: AuthorizationType.COGNITO,
+      authorizer: {
+        authorizerId: authorizer.authorizerId,
+      },
+    };
+
+    const cors: ResourceOptions = {
+      defaultCorsPreflightOptions: {
+        allowOrigins: Cors.ALL_ORIGINS,
+        allowMethods: Cors.ALL_METHODS,
+      },
+    };
+
+    const books = api.root.addResource("books", cors);
+
+    books.addMethod("GET", props.bookLambdaIntegration, auth);
+    books.addMethod("POST", props.bookLambdaIntegration, auth);
+    books.addMethod("PUT", props.bookLambdaIntegration, auth);
+    books.addMethod("DELETE", props.bookLambdaIntegration, auth);
   }
 }

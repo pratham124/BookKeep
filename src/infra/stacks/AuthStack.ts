@@ -2,6 +2,7 @@ import { CfnOutput, Stack } from "aws-cdk-lib";
 import {
   CfnIdentityPool,
   CfnIdentityPoolRoleAttachment,
+  IUserPool,
   UserPool,
 } from "aws-cdk-lib/aws-cognito";
 import { FederatedPrincipal, Role } from "aws-cdk-lib/aws-iam";
@@ -13,10 +14,12 @@ interface AuthStackProps {
 }
 
 export class AuthStack extends Stack {
+  private readonly userPool: UserPool;
+
   constructor(scope: Construct, id: string, props: AuthStackProps) {
     super(scope, id);
 
-    const userPool = new UserPool(this, "BookKeepUserPool", {
+    this.userPool = new UserPool(this, "BookKeepUserPool", {
       userPoolName: "BookKeepUserPool",
       selfSignUpEnabled: true,
       signInAliases: {
@@ -29,10 +32,10 @@ export class AuthStack extends Stack {
     });
 
     new CfnOutput(this, "UserPoolId", {
-      value: userPool.userPoolId,
+      value: this.userPool.userPoolId,
     });
 
-    const userPoolClient = userPool.addClient("BookKeepUserPoolClient", {
+    const userPoolClient = this.userPool.addClient("BookKeepUserPoolClient", {
       userPoolClientName: "BookKeepUserPoolClient",
       authFlows: {
         userPassword: true,
@@ -51,7 +54,7 @@ export class AuthStack extends Stack {
       cognitoIdentityProviders: [
         {
           clientId: userPoolClient.userPoolClientId,
-          providerName: userPool.userPoolProviderName,
+          providerName: this.userPool.userPoolProviderName,
         },
       ],
     });
@@ -85,5 +88,9 @@ export class AuthStack extends Stack {
     new CfnOutput(this, "IdentityPoolId", {
       value: identityPool.ref,
     });
+  }
+
+  public getUserPool(): IUserPool {
+    return this.userPool;
   }
 }
