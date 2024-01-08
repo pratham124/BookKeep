@@ -38,6 +38,7 @@ export class AuthStack extends Stack {
     const userPoolClient = this.userPool.addClient("BookKeepUserPoolClient", {
       userPoolClientName: "BookKeepUserPoolClient",
       authFlows: {
+        adminUserPassword: true,
         userPassword: true,
         userSrp: true,
         custom: true,

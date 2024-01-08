@@ -10,7 +10,7 @@ export default async function postBook(
 ): Promise<APIGatewayProxyResult> {
   const req = JSON.parse(event.body);
   req.id = randomBytes(16).toString("hex");
-  if (!req.title || !req.author || !req.userId || !req.id) {
+  if (!req.title || !req.author || !req.userId || !req.id || !req.type) {
     return {
       statusCode: 400,
       body: JSON.stringify({

@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 import { AuthService } from "../services/AuthService";
 import { useActionData } from "react-router-dom";
 import { errorMsg } from "./Register";
+import { AuthContextType } from "../store/authStore";
 
-export const action: ActionFunction =
-  (authContext) =>
+export const action =
+  (authContext: AuthContextType): ActionFunction =>
   async ({ request }) => {
     const { setAuthInfo } = authContext;
     const data = Object.fromEntries(await request.formData());
@@ -32,7 +33,7 @@ export const action: ActionFunction =
         username.toString(),
         password.toString()
       );
-      const { token, userId } = res;
+      const { token, userId } = res as { token: string; userId: string };
       setAuthInfo({ id: userId, token });
       return redirect("/dashboard");
     } catch (error) {

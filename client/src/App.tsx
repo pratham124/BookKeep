@@ -13,7 +13,7 @@ import Profile from "./pages/Profile";
 import WillRead from "./pages/WillRead";
 import AddBook from "./pages/AddBook";
 import Book from "./pages/Book";
-import { useAuth } from "./store/authStore";
+import { AuthContextType, useAuth } from "./store/authStore";
 
 function App() {
   const authContext = useAuth();
@@ -30,7 +30,7 @@ function App() {
         {
           path: "/login",
           element: <Login />,
-          action: loginAction(authContext),
+          action: loginAction(authContext as AuthContextType),
         },
         {
           path: "/register",

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
 
-type AuthContextType = {
+export type AuthContextType = {
   id: null | string;
   token: null | string;
   setAuthInfo: ({

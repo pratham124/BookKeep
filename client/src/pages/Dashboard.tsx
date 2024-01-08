@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState } from "react";
 import { Outlet } from "react-router-dom";
 import BigNav from "../components/BigNav";
+// import { AuthContextType, useAuth } from "../store/authStore";
+// import { useEffect } from "react";
 
 export const user = {
   name: "John Doe",
@@ -64,6 +65,15 @@ export const reading = [
 // export const useDashboardContext = () => useContext(dashboardContext);
 
 const Dashboard = () => {
+  // const { token, id } = useAuth() as AuthContextType;
+  // const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (!token || !id) {
+  //     navigate("/login");
+  //   }
+  // }, [navigate, token, id]);
+
   return (
     <main>
       <BigNav />

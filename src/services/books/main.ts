@@ -24,9 +24,9 @@ async function handler(
         // Get a single book
         res = await getBook(event, dbClient);
       } else if (event.queryStringParameters) {
-        throw new Error("Invalid query string parameters");
-      } else {
         res = await getBooks(event, dbClient);
+      } else {
+        throw new Error("Invalid Search Parameters");
       }
     } else if (event.httpMethod === "POST") {
       res = await postBook(event, dbClient);

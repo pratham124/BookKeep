@@ -20,8 +20,16 @@ export class AuthTest {
       },
     });
     const { idToken } = (await fetchAuthSession()).tokens ?? {};
-    console.log(idToken.payload.sub);
-    console.log(isSignedIn, nextStep);
+    console.log(idToken.toString);
+    fetch("https://9ahmtltyr1.execute-api.us-west-2.amazonaws.com/prod/books", {
+      method: "GET",
+      headers: {
+        Authorization: idToken.toString(),
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
   }
 
   public async signup() {

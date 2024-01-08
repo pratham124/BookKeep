@@ -3,7 +3,7 @@ type Book = {
   title: string;
   author: string;
   userId: string;
-  genre?: string;
+  type: string;
   photoUrl?: string;
 };
 
