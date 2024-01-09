@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import { action as loginAction } from "./pages/Login";
 import { action as registerAction } from "./pages/Register";
+import { loader as profileLoader } from "./pages/Profile";
 import CurrentlyReading from "./pages/CurrentlyReading";
 import HaveRead from "./pages/HaveRead";
 import Profile from "./pages/Profile";
@@ -52,6 +53,7 @@ function App() {
             {
               path: "profile",
               element: <Profile />,
+              loader: profileLoader(authContext as AuthContextType),
             },
             {
               path: "will-read",

@@ -34,7 +34,7 @@ export const action =
         password.toString()
       );
       const { token, userId } = res as { token: string; userId: string };
-      setAuthInfo({ id: userId, token });
+      setAuthInfo({ id: userId, token, userName: username.toString() });
       return redirect("/dashboard");
     } catch (error) {
       if (error instanceof Error) {

@@ -42,5 +42,14 @@ export class AuthService {
     }
   }
 
+  public async logout() {
+    try {
+      await signOut();
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
+
   public async tempCredentials() {}
 }

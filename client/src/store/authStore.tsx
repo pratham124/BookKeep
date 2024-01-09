@@ -3,12 +3,15 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 export type AuthContextType = {
   id: null | string;
   token: null | string;
+  userName: null | string;
   setAuthInfo: ({
     id,
     token,
+    userName,
   }: {
     id: string | null;
     token: string | null;
+    userName: string | null;
   }) => void;
 };
 
@@ -24,16 +27,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [authState, setAuthState] = useState<{
     id: null | string;
     token: null | string;
-  }>({ id: null, token: null });
+    userName: null | string;
+  }>({ id: null, token: null, userName: null });
 
   const setAuthInfo = ({
     id,
     token,
+    userName,
   }: {
     id: string | null;
     token: string | null;
+    userName: string | null;
   }) => {
-    setAuthState({ id, token });
+    setAuthState({ id, token, userName });
   };
 
   return (
