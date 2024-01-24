@@ -1,23 +1,19 @@
-import React, { FormEvent } from "react";
 import { Form, useSubmit } from "react-router-dom";
 
 const SearchBar = () => {
   const submit = useSubmit();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    submit(e.currentTarget);
-  };
-
   return (
-    <Form className="tb" onSubmit={handleSubmit}>
+    <Form className="tb" onSubmit={(e) => submit(e.currentTarget)}>
       <div className="td">
         <input
+          type="search"
+          name="searchInput"
+          id="search"
+          defaultValue={""}
+          placeholder={"Search for a book"}
           className="search-input"
-          type="text"
-          placeholder="Search"
-          required
-        ></input>
+        />
       </div>
       <div className="td" id="s-cover">
         <button className="search-btn" type="submit">

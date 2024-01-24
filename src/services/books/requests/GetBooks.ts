@@ -40,5 +40,8 @@ export default async function getBooks(
       message: "Books retrieved successfully",
       items,
     }),
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   };
 }

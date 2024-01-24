@@ -33,12 +33,12 @@ export const loader =
       let booksRead = 0;
       let booksReading = 0;
       let booksToRead = 0;
-      books.forEach((book: any) => {
-        if (book.status === "read") {
+      books.forEach((book: { type: string }) => {
+        if (book.type === "read") {
           booksRead++;
-        } else if (book.status === "reading") {
+        } else if (book.type === "reading") {
           booksReading++;
-        } else if (book.status === "to-read") {
+        } else if (book.type === "to-read") {
           booksToRead++;
         }
       });
@@ -57,7 +57,13 @@ export const loader =
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { booksRead, booksReading, booksToRead, userName } = useLoaderData();
+  const { booksRead, booksReading, booksToRead, userName } =
+    useLoaderData() as {
+      booksRead: number;
+      booksReading: number;
+      booksToRead: number;
+      userName: string;
+    };
   const authService = new AuthService();
   const { setAuthInfo } = useAuth() as AuthContextType;
   const handleLogout = async (

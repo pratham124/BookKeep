@@ -46,6 +46,9 @@ async function handler(
       body: JSON.stringify({
         message: err.message,
       }),
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
     });
   }
 }
