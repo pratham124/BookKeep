@@ -60,20 +60,8 @@ export const reading = [
   },
 ];
 
-// const dashboardContext = createContext({});
-
-// export const useDashboardContext = () => useContext(dashboardContext);
-
+//
 const Dashboard = () => {
-  // const { token, id } = useAuth() as AuthContextType;
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (!token || !id) {
-  //     navigate("/login");
-  //   }
-  // }, [navigate, token, id]);
-
   return (
     <main>
       <BigNav />

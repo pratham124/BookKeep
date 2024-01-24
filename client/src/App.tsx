@@ -9,6 +9,8 @@ import { action as loginAction } from "./pages/Login";
 import { action as registerAction } from "./pages/Register";
 import { loader as profileLoader } from "./pages/Profile";
 import { loader as currentlyReadingLoader } from "./pages/CurrentlyReading";
+import { loader as willReadLoader } from "./pages/WillRead";
+import { loader as haveReadLoader } from "./pages/HaveRead";
 import CurrentlyReading from "./pages/CurrentlyReading";
 import HaveRead from "./pages/HaveRead";
 import Profile from "./pages/Profile";
@@ -51,6 +53,7 @@ function App() {
             {
               path: "have-read",
               element: <HaveRead />,
+              loader: haveReadLoader(authContext as AuthContextType),
             },
             {
               path: "profile",
@@ -60,6 +63,7 @@ function App() {
             {
               path: "will-read",
               element: <WillRead />,
+              loader: willReadLoader(authContext as AuthContextType),
             },
             {
               path: "add-book",

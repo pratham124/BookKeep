@@ -13,7 +13,7 @@ const FormRow = ({
   type: string;
   labelText: string;
   placeHolder: string;
-  isError: boolean;
+  isError?: boolean;
 }) => {
   return (
     <div className="form-row">

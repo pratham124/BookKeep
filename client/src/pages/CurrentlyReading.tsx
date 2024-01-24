@@ -22,21 +22,22 @@ export const loader =
       "https://9ahmtltyr1.execute-api.us-west-2.amazonaws.com/prod/books?";
     let params = "userId=" + id + "&type=reading";
     if (userInput.searchInput) {
-      params += "&searcht=" + userInput.searchInput;
+      params += "&title=" + userInput.searchInput;
     }
-    // try {
-    //   const response = await axios.get(url + params, {
-    //     headers: {
-    //       Authorization: token,
-    //     },
-    //   });
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.log(error);
-    //   toast.error("Oops, something went wrong!");
-    //   return error;
-    // }
-    return "hello";
+    try {
+      const response = await axios.get(url + params, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      return {
+        books: response.data.items,
+      };
+    } catch (error) {
+      console.log(error);
+      toast.error("Oops, something went wrong!");
+      return error;
+    }
   };
 
 const CurrentlyReading = () => {
