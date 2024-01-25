@@ -4,18 +4,11 @@ import { getSuffixFromStack } from "../Utils";
 import { AttributeType, ITable, Table } from "aws-cdk-lib/aws-dynamodb";
 import {
   Bucket,
-  BucketAccessControl,
   HttpMethods,
   IBucket,
   ObjectOwnership,
 } from "aws-cdk-lib/aws-s3";
-import {
-  AnyPrincipal,
-  ArnPrincipal,
-  Effect,
-  PolicyStatement,
-} from "aws-cdk-lib/aws-iam";
-import { Anyone } from "@aws-cdk/aws-iam";
+import { AnyPrincipal, Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 export class DataStack extends Stack {
   private readonly table: ITable;

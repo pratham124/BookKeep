@@ -3,6 +3,7 @@ import SearchBar from "./SearchBar";
 import BookContainer from "./BookContainer";
 
 export type Book = {
+  id: string;
   title: string;
   author: string;
   photoUrl?: string;
@@ -14,10 +15,10 @@ const BooksContainer = ({ books }: { books: Book[] }) => {
     <>
       <SearchBar />
       <div className="books-container">
-        {books.map((book, i) => (
+        {books.map((book) => (
           <BookContainer
-            key={i}
-            id={i.toString()}
+            key={book.id}
+            id={book.id}
             title={book.title}
             author={book.author}
             photoUrl={book?.photoUrl}

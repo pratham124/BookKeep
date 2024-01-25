@@ -12,7 +12,10 @@ export default async function getBooks(
 ): Promise<APIGatewayProxyResult> {
   const filters = event.queryStringParameters;
   const filterExpressionString = Object.keys(filters)
-    .map((key) => `#${key} = :${key}`)
+    .map((key) => {
+      if (key === "title") return `begins_with(#${key}, :${key})`;
+      return `#${key} = :${key}`;
+    })
     .join(" AND ");
   const expressionAttributeValues = Object.keys(filters).reduce((acc, key) => {
     acc[`:${key}`] = { S: filters[key] };

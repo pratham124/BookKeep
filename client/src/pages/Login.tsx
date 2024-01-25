@@ -1,11 +1,11 @@
-import React from "react";
-import { ActionFunction, Form, Link, redirect } from "react-router-dom";
+import React, { useEffect } from "react";
+import { ActionFunction, Form, Link, useNavigate } from "react-router-dom";
 import FormRow from "../components/FormRow";
 import { toast } from "react-toastify";
 import { AuthService } from "../services/AuthService";
 import { useActionData } from "react-router-dom";
 import { errorMsg } from "./Register";
-import { AuthContextType } from "../store/authStore";
+import { AuthContextType, useAuth } from "../store/authStore";
 
 export const action =
   (authContext: AuthContextType): ActionFunction =>
@@ -35,7 +35,9 @@ export const action =
       );
       const { token, userId } = res as { token: string; userId: string };
       setAuthInfo({ id: userId, token, userName: username.toString() });
-      return redirect("/register");
+      return {
+        msg: "Login successful",
+      };
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -47,6 +49,15 @@ export const action =
   };
 
 const Login = () => {
+  const { token } = useAuth() as AuthContextType;
+  const nagivate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      console.log("redirecting");
+      nagivate("/dashboard");
+    }
+  }, [token, nagivate]);
   const errors: errorMsg = useActionData() as errorMsg;
   return (
     <div className="form-div">
