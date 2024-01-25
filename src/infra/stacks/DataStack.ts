@@ -5,9 +5,17 @@ import { AttributeType, ITable, Table } from "aws-cdk-lib/aws-dynamodb";
 import {
   Bucket,
   BucketAccessControl,
+  HttpMethods,
   IBucket,
   ObjectOwnership,
 } from "aws-cdk-lib/aws-s3";
+import {
+  AnyPrincipal,
+  ArnPrincipal,
+  Effect,
+  PolicyStatement,
+} from "aws-cdk-lib/aws-iam";
+import { Anyone } from "@aws-cdk/aws-iam";
 
 export class DataStack extends Stack {
   private readonly table: ITable;
@@ -28,6 +36,13 @@ export class DataStack extends Stack {
 
     this.photoBucket = new Bucket(this, "BookKeepPhotoBucket", {
       bucketName: `book-keep-photo-bucket-${suffix}`,
+      cors: [
+        {
+          allowedMethods: [HttpMethods.HEAD, HttpMethods.GET, HttpMethods.PUT],
+          allowedOrigins: ["*"],
+          allowedHeaders: ["*"],
+        },
+      ],
       objectOwnership: ObjectOwnership.OBJECT_WRITER,
       blockPublicAccess: {
         blockPublicAcls: false,
@@ -36,6 +51,15 @@ export class DataStack extends Stack {
         restrictPublicBuckets: false,
       },
     });
+
+    const photoBucketPolicy = new PolicyStatement({
+      effect: Effect.ALLOW,
+      principals: [new AnyPrincipal()],
+      actions: ["s3:PutObject", "s3:PutObjectAcl", "s3:GetObject"],
+      resources: [`${this.photoBucket.bucketArn}/*`],
+    });
+
+    this.photoBucket.addToResourcePolicy(photoBucketPolicy);
   }
 
   public getTable(): ITable {
