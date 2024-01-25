@@ -4,6 +4,7 @@ import {
   redirect,
   useLoaderData,
   useNavigate,
+  useNavigation,
 } from "react-router-dom";
 import { AuthContextType, useAuth } from "../store/authStore";
 import { toast } from "react-toastify";
@@ -57,6 +58,8 @@ export const loader =
 
 const Profile = () => {
   const navigate = useNavigate();
+  const nagivation = useNavigation();
+  const isLoading = nagivation.state === "loading";
   const { booksRead, booksReading, booksToRead, userName } =
     useLoaderData() as {
       booksRead: number;
@@ -75,6 +78,7 @@ const Profile = () => {
     navigate("/");
   };
 
+  if (isLoading) return <div>Loading...</div>;
   return (
     <div className="profile">
       <div className="stats">

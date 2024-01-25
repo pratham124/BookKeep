@@ -1,7 +1,11 @@
-import BooksContainer from "../components/BooksContainer";
-import { haveRead } from "./Dashboard";
+import BooksContainer, { Book } from "../components/BooksContainer";
 import { AuthContextType } from "../store/authStore";
-import { LoaderFunction, redirect } from "react-router-dom";
+import {
+  LoaderFunction,
+  redirect,
+  useLoaderData,
+  useNavigation,
+} from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -16,7 +20,6 @@ export const loader =
     const userInput = Object.fromEntries([
       ...new URL(request.url).searchParams.entries(),
     ]);
-    console.log(userInput);
     const url =
       "https://9ahmtltyr1.execute-api.us-west-2.amazonaws.com/prod/books?";
     let params = "userId=" + id + "&type=read";
@@ -40,7 +43,12 @@ export const loader =
   };
 
 const HaveRead = () => {
-  return <BooksContainer books={haveRead} />;
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
+  const { books } = useLoaderData() as { books: Book[] };
+
+  if (isLoading) return <div>Loading...</div>;
+  return <BooksContainer books={books} />;
 };
 
 export default HaveRead;

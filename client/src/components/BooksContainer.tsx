@@ -2,10 +2,11 @@ import React from "react";
 import SearchBar from "./SearchBar";
 import BookContainer from "./BookContainer";
 
-type Book = {
+export type Book = {
   title: string;
   author: string;
   photoUrl?: string;
+  type: string;
 };
 
 const BooksContainer = ({ books }: { books: Book[] }) => {

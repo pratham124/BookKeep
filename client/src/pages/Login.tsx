@@ -35,7 +35,7 @@ export const action =
       );
       const { token, userId } = res as { token: string; userId: string };
       setAuthInfo({ id: userId, token, userName: username.toString() });
-      return redirect("/dashboard");
+      return redirect("/register");
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);

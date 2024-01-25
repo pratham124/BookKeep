@@ -25,6 +25,10 @@ body {
   background: var(--primary-color);
 }
 
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
 .navbar {
   margin: 4rem 10%;
   display: flex;

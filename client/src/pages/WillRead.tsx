@@ -1,8 +1,12 @@
 import React from "react";
-import BooksContainer from "../components/BooksContainer";
-import { willRead } from "./Dashboard";
+import BooksContainer, { Book } from "../components/BooksContainer";
 import { AuthContextType } from "../store/authStore";
-import { LoaderFunction, redirect } from "react-router-dom";
+import {
+  LoaderFunction,
+  redirect,
+  useLoaderData,
+  useNavigation,
+} from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -41,7 +45,12 @@ export const loader =
   };
 
 const WillRead = () => {
-  return <BooksContainer books={willRead} />;
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
+  const { books } = useLoaderData() as { books: Book[] };
+
+  if (isLoading) return <div>Loading...</div>;
+  return <BooksContainer books={books} />;
 };
 
 export default WillRead;
