@@ -53,5 +53,8 @@ export default async function putBook(
       message: `Book ${bookId} updated successfully`,
       book: res.Attributes,
     }),
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   };
 }

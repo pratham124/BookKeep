@@ -39,7 +39,7 @@ export const loader =
           booksRead++;
         } else if (book.type === "reading") {
           booksReading++;
-        } else if (book.type === "to-read") {
+        } else if (book.type === "will-read") {
           booksToRead++;
         }
       });

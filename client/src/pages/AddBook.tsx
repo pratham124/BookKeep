@@ -6,9 +6,9 @@ import { useDropzone } from "react-dropzone";
 const options = ["Currently Reading", "Will Read", "Have Read"];
 
 const AddBook = () => {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState("");
-  const onDrop = useCallback((acceptedFiles) => {
+  const onDrop = useCallback((acceptedFiles: File[]) => {
     setFile(acceptedFiles[0]);
 
     // Create a URL for the file
@@ -22,9 +22,7 @@ const AddBook = () => {
     },
   });
 
-  console.log(file);
-
-  const handleRemove = (e) => {
+  const handleRemove = (e: React.MouseEvent) => {
     e.preventDefault();
     setFile(null);
     setPreviewUrl("");

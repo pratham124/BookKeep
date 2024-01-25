@@ -11,6 +11,7 @@ import { loader as profileLoader } from "./pages/Profile";
 import { loader as currentlyReadingLoader } from "./pages/CurrentlyReading";
 import { loader as willReadLoader } from "./pages/WillRead";
 import { loader as haveReadLoader } from "./pages/HaveRead";
+import { loader as bookLoader } from "./pages/Book";
 import CurrentlyReading from "./pages/CurrentlyReading";
 import HaveRead from "./pages/HaveRead";
 import Profile from "./pages/Profile";
@@ -72,6 +73,7 @@ function App() {
             {
               path: "book/:id",
               element: <Book />,
+              loader: bookLoader(authContext as AuthContextType),
             },
           ],
         },

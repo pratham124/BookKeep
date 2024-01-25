@@ -36,5 +36,8 @@ export default async function getBook(
       message: `Book ${bookId} retrieved successfully`,
       book,
     }),
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   };
 }

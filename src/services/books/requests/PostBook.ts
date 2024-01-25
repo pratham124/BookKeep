@@ -32,5 +32,8 @@ export default async function postBook(
     body: JSON.stringify({
       message: `Book ${book.id} created successfully`,
     }),
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   };
 }
