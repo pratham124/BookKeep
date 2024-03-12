@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
-import { ActionFunction, Form, Link, useNavigate } from "react-router-dom";
+import {
+  ActionFunction,
+  Form,
+  Link,
+  useNavigate,
+  useNavigation,
+} from "react-router-dom";
 import FormRow from "../components/FormRow";
 import { toast } from "react-toastify";
 import { AuthService } from "../services/AuthService";
 import { useActionData } from "react-router-dom";
 import { errorMsg } from "./Register";
 import { AuthContextType, useAuth } from "../store/authStore";
+import Loader from "../components/Loading";
 
 export const action =
   (authContext: AuthContextType): ActionFunction =>
@@ -51,14 +58,17 @@ export const action =
 const Login = () => {
   const { token } = useAuth() as AuthContextType;
   const nagivate = useNavigate();
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
 
   useEffect(() => {
     if (token) {
-      console.log("redirecting");
       nagivate("/dashboard");
     }
   }, [token, nagivate]);
   const errors: errorMsg = useActionData() as errorMsg;
+
+  if (isLoading) return <Loader />;
   return (
     <div className="form-div">
       <Form method="post" className="form">

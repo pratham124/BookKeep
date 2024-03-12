@@ -9,6 +9,7 @@ import FormRow from "../components/FormRow";
 import { useDropzone } from "react-dropzone";
 import { AuthContextType } from "../store/authStore";
 import axios from "axios";
+import { BookData } from "../components/BooksContainer";
 
 const options = ["Currently Reading", "Will Read", "Have Read"];
 
@@ -40,8 +41,8 @@ export const loader =
   };
 
 const Book = () => {
-  const { book } = useLoaderData();
-  const [file, setFile] = useState<File | null>(null);
+  const { book } = useLoaderData() as { book: BookData };
+  const [, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState(book?.photoUrl);
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFile(acceptedFiles[0]);

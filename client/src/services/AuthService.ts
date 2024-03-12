@@ -1,5 +1,7 @@
 import { fetchAuthSession, signIn, signOut, signUp } from "@aws-amplify/auth";
 import { Amplify } from "aws-amplify";
+import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
+import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
 
 Amplify.configure({
   Auth: {
@@ -11,6 +13,9 @@ Amplify.configure({
 });
 
 export class AuthService {
+  private jwtToken: string | undefined;
+  private temporaryCredentials: object | undefined;
+
   public async login(username: string, password: string) {
     try {
       await signOut();
@@ -51,5 +56,28 @@ export class AuthService {
     }
   }
 
-  public async tempCredentials() {}
+  public async getTemporaryCredentials() {
+    if (this.temporaryCredentials) {
+      return this.temporaryCredentials;
+    }
+    this.temporaryCredentials = await this.generateTemporaryCredentials();
+    return this.temporaryCredentials;
+  }
+
+  private async generateTemporaryCredentials() {
+    const cognitoIdentityPool = `cognito-idp.us-west-2.amazonaws.com/`;
+    const cognitoIdentity = new CognitoIdentityClient({
+      credentials: fromCognitoIdentityPool({
+        clientConfig: {
+          region: "us-west-2",
+        },
+        identityPoolId: "us-west-2:79fe5b15-916e-4b53-b0af-033b4e417cc0",
+        logins: {
+          [cognitoIdentityPool]: this.jwtToken!,
+        },
+      }),
+    });
+    const credentials = await cognitoIdentity.config.credentials();
+    return credentials;
+  }
 }

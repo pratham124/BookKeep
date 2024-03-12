@@ -1,5 +1,5 @@
 import React from "react";
-import BooksContainer, { Book } from "../components/BooksContainer";
+import BooksContainer, { BookData } from "../components/BooksContainer";
 import { AuthContextType } from "../store/authStore";
 import {
   LoaderFunction,
@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Loader from "../components/Loading";
 
 export const loader =
   (authContext: AuthContextType): LoaderFunction =>
@@ -48,9 +49,9 @@ export const loader =
 const CurrentlyReading = () => {
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
-  const { books } = useLoaderData() as { books: Book[] };
+  const { books } = useLoaderData() as { books: BookData[] };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loader />;
 
   return <BooksContainer books={books} />;
 };

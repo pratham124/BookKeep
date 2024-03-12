@@ -2,7 +2,7 @@ import React from "react";
 import SearchBar from "./SearchBar";
 import BookContainer from "./BookContainer";
 
-export type Book = {
+export type BookData = {
   id: string;
   title: string;
   author: string;
@@ -10,7 +10,7 @@ export type Book = {
   type: string;
 };
 
-const BooksContainer = ({ books }: { books: Book[] }) => {
+const BooksContainer = ({ books }: { books: BookData[] }) => {
   return (
     <>
       <SearchBar />
